@@ -23,12 +23,8 @@ public:
 	
 
 	void EquipWeapon(class AWeapon* WeaponToEquip);
-	void ReloadEmptyWeapon();
-	void PlayEquipWeaponSound(); 
-	void UpdateCarriedAmmo();
-	void AttachActorToRightHand();
-	void AttachActorToLeftHand();
-	void DropEquippedWeapon();
+	
+
 	void Reload();
 	UFUNCTION(BlueprintCallable)
 	void FinishReloading();
@@ -36,6 +32,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ThrowGrenadeFinished();
+
+	UFUNCTION(BlueprintCallable)
+	void LaunchGrenade();
 protected:
 	virtual void BeginPlay() override;
 
@@ -71,6 +70,20 @@ protected:
 
 	UFUNCTION(Server, Reliable)
 	void ServerThrowGrenade();
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AProjectile> GrenadeClass;
+
+	void DropEquippedWeapon();
+	void AttachActorToRightHand();
+	void AttachActorToLeftHand();
+	void UpdateCarriedAmmo();
+	void PlayEquipWeaponSound();
+	void ReloadEmptyWeapon();
+	void ShowAttachedGrenade(bool bShowGrenade);
+	
+	
+
 
 private:
 	UPROPERTY()
