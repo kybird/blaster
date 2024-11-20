@@ -1,0 +1,6 @@
+**/*.vs
+**/Binaries
+/DerievedData
+/Saved
+**/Intermediate
+/enc_temp_folder
