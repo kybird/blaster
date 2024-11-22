@@ -44,6 +44,7 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerLaunchGrenade(const FVector_NetQuantize& Target);
 
+	void PickupAmmo(EWeaponType WeaponType, int32 AmmoCount);
 protected:
 	virtual void BeginPlay() override;
 
@@ -92,7 +93,7 @@ protected:
 	void ShowAttachedGrenade(bool bShowGrenade);
 	
 	
-
+	
 
 private:
 	UPROPERTY()
@@ -142,6 +143,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Combat)
 	float ZoomInterpSpeed = 20.f;
+
+	UPROPERTY(EditAnywhere, Category = Combat)
+	int32 MaxCarriedAmmo = 500;
 
 	void InterpFOV(float DeltaTime);
 

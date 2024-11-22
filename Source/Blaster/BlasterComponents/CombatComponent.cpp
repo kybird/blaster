@@ -422,6 +422,20 @@ void UCombatComponent::ShowAttachedGrenade(bool bShowGrenade)
 	}
 }
 
+void UCombatComponent::PickupAmmo(EWeaponType WeaponType, int32 AmmoCount)
+{
+	if (CarriedAmmoMap.Contains(WeaponType))
+	{
+		CarriedAmmoMap[WeaponType] = FMath::Clamp(CarriedAmmoMap[WeaponType] = AmmoCount, 0, MaxCarriedAmmo);
+		UpdateCarriedAmmo();
+	}
+
+	if (EquippedWeapon && EquippedWeapon->GetWeaponType() == WeaponType && EquippedWeapon->IsEmpty())
+	{
+		Reload();
+	}
+}
+
 
 
 void UCombatComponent::HandleReload()

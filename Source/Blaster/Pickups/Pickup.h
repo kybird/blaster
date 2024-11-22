@@ -36,6 +36,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* PickupMesh;
 
+	float Rotation = 45.f;
 
 public:	
 
