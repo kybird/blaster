@@ -280,6 +280,10 @@ void ABlasterCharacter::PostInitializeComponents()
 	if (Buff)
 	{
 		Buff->Character = this;
+		Buff->SetInitialSpeed(
+			GetCharacterMovement()->MaxWalkSpeed, 
+			GetCharacterMovement()->MaxWalkSpeedCrouched
+		);
 	}
 }
 
@@ -685,10 +689,13 @@ void ABlasterCharacter::HideCharacterIfCameraClose()
 	}
 }
 
-void ABlasterCharacter::OnRep_Health()
+void ABlasterCharacter::OnRep_Health(float LastHealth)
 {
 	UpdateHUDHealth();
-	PlayHitReactMontage();
+	if (Health < LastHealth)
+	{
+		PlayHitReactMontage();
+	}
 }
 
 void ABlasterCharacter::UpdateHUDHealth()
