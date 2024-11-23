@@ -17,8 +17,8 @@ APickup::APickup()
 	OverlapSphere->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	OverlapSphere->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	OverlapSphere->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
-	OverlapSphere->SetRelativeLocation(FVector(0.f, 0.f, 85.f));
-
+	//OverlapSphere->SetRelativeLocation(FVector(0.f, 0.f, 85.f));
+	OverlapSphere->AddLocalOffset(FVector(0.f, 0.f, 85.f));
 
 	PickupMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PickupMesh"));
 	PickupMesh->SetupAttachment(OverlapSphere);
@@ -49,7 +49,7 @@ void APickup::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	PickupMesh->AddLocalRotation(FRotator(0.f, Rotation * DeltaTime, 0.f));
+	PickupMesh->AddWorldRotation(FRotator(0.f, BaseTurnRate * DeltaTime, 0.f));
 }
 
 void APickup::Destroyed()
