@@ -86,14 +86,19 @@ private:
 	void PollInit();
 
 	class UCharacterOverlay* CharacterOverlay;
-	bool bInitializeCharacterOverlay = false;
+	// bool bInitializeCharacterOverlay = false;
 
+	bool bInitializeHealth = false;
 	float HUDHealth;
 	float HUDMaxHealth;
+	bool bInitializeDefeats = false;
 	float HUDDefeats;
+	bool bInitializeScore = false;
 	float HUDScore;
+	bool bInitializeGrenades = false;
 	int32 HUDGrenades;
 
+	bool bInitializeShield = false;
 	float HUDShield;
 	float HUDMaxShield;
 

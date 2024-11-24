@@ -204,6 +204,7 @@ void ABlasterCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	UpdateHUDHealth();
+	UpdateHUDShield();
 
 	if (HasAuthority())
 	{
@@ -383,9 +384,28 @@ void ABlasterCharacter::GrenadeButtonPressed()
 void ABlasterCharacter::ReceiveDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatorController, AActor* DamageCauser)
 {
 	if (bElimmed) return;
-	Health = FMath::Clamp(Health - Damage, 0, MaxHealth);
+
+	float DamageToHealth = Damage;
+
+	if (Shield > 0)
+	{
+		if (Shield >= Damage)
+		{
+			Shield = FMath::Clamp(Shield - Damage, 0, MaxShield);
+			DamageToHealth = 0;
+		}
+		else
+		{
+			DamageToHealth = FMath::Clamp(Damage - Shield, 0, Damage);
+			Shield = 0;
+		}
+	}
+
+	Health = FMath::Clamp(Health - DamageToHealth, 0, MaxHealth);
 
 	UpdateHUDHealth();
+	UpdateHUDShield();
+
 	PlayHitReactMontage();
 
 	if (Health == 0.f)
@@ -715,9 +735,11 @@ void ABlasterCharacter::UpdateHUDHealth()
 
 void ABlasterCharacter::UpdateHUDShield()
 {
+	UE_LOG(LogTemp, Warning, TEXT("UpdateHUDShield Called but Controller not exist"));
 	BlasterPlayerController = BlasterPlayerController == nullptr ? Cast<ABlasterPlayerController>(Controller) : BlasterPlayerController;
 	if (BlasterPlayerController)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("UpdateHUDShield Called"));
 		BlasterPlayerController->SetHUDShield(Shield, MaxShield);
 	}
 }
