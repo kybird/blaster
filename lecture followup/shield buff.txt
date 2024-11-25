@@ -1,0 +1,95 @@
+쉴드를 0으로 변경하고 에디터에서 변경할수 있도록한다
+
+쉴드 픽업을 만들자
+
+NS_Pickup_4 를 사용하자
+
+파티클업데이트에서 Kill Partilce 을 꺼준다 세개모두
+
+우린이펙트가 없어서 새로 만들거나 그냥 없어야한다
+
+쉴드 사운드는 뭘쓸까.
+
+이전 어셋팩에서 쓰자
+Special Powerup_01_wav_cue 를 쓰고싶다. 하지만 노트북에 있고 집컴터에 없었음 ㅋㅋ
+
+이거 집에가서 복사해놓자 젠장
+
+Asset Sound pickup 에 복사해버리자
+
+큐를 만들어야한다
+이름은 ShieldBuff_Cue
+
+Attenuation 은 일림봇 Att 을 사용
+
+이제 클래스를 만들어야한다
+
+Pickup 을 상속해서 ShieldPickup 을 에디터에서 생성해서 비줠스튜디오로 넘어간다
+
+이것은 헬스 픽업과 비슷하니 같이 열어보고 보자
+
+OnSphereOverlap 을 복사하고 변수도 같이 복사한다
+인클루드도 복사하다
+HealAmount 는 ShieldReplenish
+ShieldReplenishTime 으로 수정
+
+OnSphereOverlap 내용도 적절하게 수정한다
+
+Buff->Heal 은 지우고 
+
+BuffComponent 를 수정하자
+
+Heal 함수에 대응하는
+ReplenishShield 만들고 파라메터는 ShiledAmount, ReplenishTime
+
+힐바로아래 구현하자
+
+우리가 쉴드를 채우고있는지 여부 플래그 bReplenishingShiled 추가
+ShieldReplenishRate 추가 0
+ShieldReplenishAmount = 0
+
+ReplenishShield 는 플래그를 세우고 
+리플래슁레이트를 계산하고
+리플레슁 어마온트를 계산한다
+
+픽업의 OnSphereOverlap 에서 ReplenshingSheld 를 호출하도록 수정하자
+ShieldReplenishAmount
+ShieldReplenishTime
+
+램프업함수가 필요하다
+
+버프컴포넌트에 HealRampUp 과 동일한것을 생성
+ShieldRampUp
+만들고
+TickComponent 에 호출을 추가한다
+
+ShieldRampUp 은 힐램프업과 동일하게 동작한다
+
+로직복사하고 필요한것들을 수정한다
+
+블라스터 캐릭터에 GetShield GetMaxShield SetShield 가 필요하다 인라인으로 처리하자
+
+테스트하자
+
+상속해서 BP_ShieldPickup 을 생성한다
+
+이펙트는 NS_Pickup_4 를 사용한다
+사운드는 ShieldBuff_cue 를 사용한다
+PickupEffect 는 아무거나 선택해라 난 암것도안할거다
+
+블라스터 캐릭터의 쉴드를 0으로 만들고 테스트해라
+
+쉴드픽업을 신에 올려놓자
+두개를만들어서 서버와 클라 테스트를 용의하게 하자
+서버 확인완료
+클라 확인완료
+
+이번강의는 여기까지
+
+2시 11분.. 
+강의 하나 다듣는데 얼마걸린겨. 1배로 들었군
+16분짜리들었음 중간중간에 멈춘거새악ㄱ하면....20분은들었겟다
+1.25배로 들어야할듯
+자 이제 이것만보고 코딩하자
+
+
